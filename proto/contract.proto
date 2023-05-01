@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/simples-streaming-server/proto";
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.product";
+option java_outer_classname = "ProductProto";
+
+package proto;
+
+service ProcessService {
+
+  rpc CallUnary(Empty) returns (Process) {} // unary
+  rpc CallSStream(Empty) returns (stream Process) {} // server stream
+  rpc CallCStream(stream Process) returns (ListProcess) {} // client stream
+  rpc CallBStream(stream Process) returns (stream Process) {} // bi direcional stream
+}
+
+message Empty {}
+
+message Process {
+  int32 id = 1;
+  string time = 2;
+  string label = 3;
+}
+
+message ListProcess {
+  repeated Process process = 1;
+}
